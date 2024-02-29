@@ -1,0 +1,1535 @@
+C:\Users\aravi>mysql -u root -p
+Enter password: **********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SELECT VERSION(), CURRENT_DATE;
++-----------+--------------+
+| VERSION() | CURRENT_DATE |
++-----------+--------------+
+| 8.0.36    | 2024-01-30   |
++-----------+--------------+
+1 row in set (0.13 sec)
+
+mysql> SELECT VERSION(), CURRENT_DATE;
++-----------+--------------+
+| VERSION() | CURRENT_DATE |
++-----------+--------------+
+| 8.0.36    | 2024-01-30   |
++-----------+--------------+
+1 row in set (0.00 sec)
+
+mysql> select version(), current_date;
++-----------+--------------+
+| version() | current_date |
++-----------+--------------+
+| 8.0.36    | 2024-01-30   |
++-----------+--------------+
+1 row in set (0.00 sec)
+
+mysql> SeLeCt vErSiOn(), current_DATE;
++-----------+--------------+
+| vErSiOn() | current_DATE |
++-----------+--------------+
+| 8.0.36    | 2024-01-30   |
++-----------+--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SIN(PI()/4), (4+1)*5;
++--------------------+---------+
+| SIN(PI()/4)        | (4+1)*5 |
++--------------------+---------+
+| 0.7071067811865476 |      25 |
++--------------------+---------+
+1 row in set (0.04 sec)
+
+mysql> SELECT VERSION(); SELECT NOW();
++-----------+
+| VERSION() |
++-----------+
+| 8.0.36    |
++-----------+
+1 row in set (0.00 sec)
+
++---------------------+
+| NOW()               |
++---------------------+
+| 2024-01-30 17:44:30 |
++---------------------+
+1 row in set (0.10 sec)
+
+mysql> SELECT
+    -> USER()
+    -> ,
+    -> CURRENT_DATE;
++----------------+--------------+
+| USER()         | CURRENT_DATE |
++----------------+--------------+
+| root@localhost | 2024-01-30   |
++----------------+--------------+
+1 row in set (0.11 sec)
+
+mysql> SELECT
+    -> USER()
+    -> \C
+ERROR:
+Usage: \C charset_name | charset charset_name
+    -> \c
+mysql> select 'my
+    '> name'
+    -> select "my
+    "> name"
+    -> select `my
+    `> name`
+    -> select /*my
+   /*> comment*/
+    -> SELECT USER()
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select "my
+name"
+select `my
+name`
+select
+SELECT USER()' at line 3
+mysql> SELECT USER()
+    -> ;
++----------------+
+| USER()         |
++----------------+
+| root@localhost |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM my_table WHERE name = 'Smith AND age<30;
+    '> /c
+    '> '\c
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| aravind            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> USE aravind
+Database changed
+mysql> GRANT ALL ON menagerie.* To 'root@localhost'@'localhost:3306'
+    -> ;
+ERROR 1410 (42000): You are not allowed to create a user with GRANT
+mysql> GRANT ALL ON menagerie.* TO 'host'@'localhost:3306';
+ERROR 1410 (42000): You are not allowed to create a user with GRANT
+mysql> drop aravind;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'aravind' at line 1
+mysql> drop database aravind;
+Query OK, 0 rows affected (0.36 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> CREATE DATABASE menagerie;
+Query OK, 1 row affected (0.17 sec)
+
+mysql> USE menagerie
+Database changed
+mysql> mysql -u root -p menagerie;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql -u root -p menagerie' at line 1
+mysql> SELECT DATABASE();
++------------+
+| DATABASE() |
++------------+
+| menagerie  |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SHOW TABLES;
+Empty set (0.12 sec)
+
+mysql> CREATE TABLE pet (name VARCHAR(20), owner VARCHAR(20), species VARCHAR(20), sex CHAR(1), birth DATE, death DATE);
+Query OK, 0 rows affected (0.81 sec)
+
+mysql> SHOW TABLES;
++---------------------+
+| Tables_in_menagerie |
++---------------------+
+| pet                 |
++---------------------+
+1 row in set (0.01 sec)
+
+mysql> DESCRIBE pet;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(20) | YES  |     | NULL    |       |
+| owner   | varchar(20) | YES  |     | NULL    |       |
+| species | varchar(20) | YES  |     | NULL    |       |
+| sex     | char(1)     | YES  |     | NULL    |       |
+| birth   | date        | YES  |     | NULL    |       |
+| death   | date        | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+6 rows in set (0.14 sec)
+
+mysql> LOAD DATA LOCAL INFILE '/path/pet.txt' INTO TABLE pet;
+ERROR 3948 (42000): Loading local data is disabled; this must be enabled on both the client and server sides
+mysql> LOAD DATA LOCAL INFILE '/path/pet.txt' INTO TABLE pet
+    -> LINES TERMINATED BY '\r\n';
+ERROR 3948 (42000): Loading local data is disabled; this must be enabled on both the client and server sides
+mysql> INSERT INTO pet
+    -> VALUES ('Puffball','Diane','Hamster','F','1999-03-30',NULL);
+Query OK, 1 row affected (0.38 sec)
+
+mysql> INSERT INTO pet
+    -> VALUES ('Fluffy','Harold','Cat','F','1993-02-04',NULL);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> INSERT INTO pet
+    -> VALUES ('Claws','Gwen','Cat','M','1994-03-17',NULL);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> INSERT INTO pet
+    -> VALUES ('Buffy','Harold','Dog','F','1989-05-13',NULL);
+Query OK, 1 row affected (0.15 sec)
+
+mysql> INSERT INTO pet
+    -> VALUES ('Fang','Benny','Dog','M','1990-08-27',NULL);
+Query OK, 1 row affected (0.18 sec)
+
+mysql> INSERT INTO pet
+    -> VALUES('Bowser','Diane','Dog','M','1979-08-31','1995-07-29');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> INSERT INTO pet
+    -> VALUES ('Chirpy','Gwen','Bird','F','1998-09-11');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO pet
+    -> VALUES ('Chirpy','Gwen','Bird','F','1998-09-11',NULL);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> INSERT INTO pet
+    -> VALUES ('Whistler','Gwen','Bird',NULL,'1997-12-09',NULL);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> INSERT INTO pet
+    -> VALUES ('Slim','Benny','Snake','M','1996-04-29',NULL);
+Query OK, 1 row affected (0.41 sec)
+
+mysql> SELECT * FROM pet;
++----------+--------+---------+------+------------+------------+
+| name     | owner  | species | sex  | birth      | death      |
++----------+--------+---------+------+------------+------------+
+| Puffball | Diane  | Hamster | F    | 1999-03-30 | NULL       |
+| Fluffy   | Harold | Cat     | F    | 1993-02-04 | NULL       |
+| Claws    | Gwen   | Cat     | M    | 1994-03-17 | NULL       |
+| Buffy    | Harold | Dog     | F    | 1989-05-13 | NULL       |
+| Fang     | Benny  | Dog     | M    | 1990-08-27 | NULL       |
+| Bowser   | Diane  | Dog     | M    | 1979-08-31 | 1995-07-29 |
+| Chirpy   | Gwen   | Bird    | F    | 1998-09-11 | NULL       |
+| Whistler | Gwen   | Bird    | NULL | 1997-12-09 | NULL       |
+| Slim     | Benny  | Snake   | M    | 1996-04-29 | NULL       |
++----------+--------+---------+------+------------+------------+
+9 rows in set (0.00 sec)
+
+mysql> UPDATE pet SET birth='1989-08-31' WHERE name= 'Bowser';
+Query OK, 1 row affected (0.19 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM pet WHERE name='Bowser';
++--------+-------+---------+------+------------+------------+
+| name   | owner | species | sex  | birth      | death      |
++--------+-------+---------+------+------------+------------+
+| Bowser | Diane | Dog     | M    | 1989-08-31 | 1995-07-29 |
++--------+-------+---------+------+------------+------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM pet WHERE birth >='1998-1-1';
++----------+-------+---------+------+------------+-------+
+| name     | owner | species | sex  | birth      | death |
++----------+-------+---------+------+------------+-------+
+| Puffball | Diane | Hamster | F    | 1999-03-30 | NULL  |
+| Chirpy   | Gwen  | Bird    | F    | 1998-09-11 | NULL  |
++----------+-------+---------+------+------------+-------+
+2 rows in set (0.03 sec)
+
+mysql> SELECT * FROM PET WHERE SPECIES='DOG' AND SEX='F';
++-------+--------+---------+------+------------+-------+
+| name  | owner  | species | sex  | birth      | death |
++-------+--------+---------+------+------------+-------+
+| Buffy | Harold | Dog     | F    | 1989-05-13 | NULL  |
++-------+--------+---------+------+------------+-------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM PET WHERE SPECIES='SNAKE' OR SPECIES='BIRD';
++----------+-------+---------+------+------------+-------+
+| name     | owner | species | sex  | birth      | death |
++----------+-------+---------+------+------------+-------+
+| Chirpy   | Gwen  | Bird    | F    | 1998-09-11 | NULL  |
+| Whistler | Gwen  | Bird    | NULL | 1997-12-09 | NULL  |
+| Slim     | Benny | Snake   | M    | 1996-04-29 | NULL  |
++----------+-------+---------+------+------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PET WHERE (SPECIES='CAT' AND SEX='M')OR(SPECIES='DOG' AND SEX='F');
++-------+--------+---------+------+------------+-------+
+| name  | owner  | species | sex  | birth      | death |
++-------+--------+---------+------+------------+-------+
+| Claws | Gwen   | Cat     | M    | 1994-03-17 | NULL  |
+| Buffy | Harold | Dog     | F    | 1989-05-13 | NULL  |
++-------+--------+---------+------+------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT NAME,BIRTH FROM PET;
++----------+------------+
+| NAME     | BIRTH      |
++----------+------------+
+| Puffball | 1999-03-30 |
+| Fluffy   | 1993-02-04 |
+| Claws    | 1994-03-17 |
+| Buffy    | 1989-05-13 |
+| Fang     | 1990-08-27 |
+| Bowser   | 1989-08-31 |
+| Chirpy   | 1998-09-11 |
+| Whistler | 1997-12-09 |
+| Slim     | 1996-04-29 |
++----------+------------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT OWNER FROM PET;
++--------+
+| OWNER  |
++--------+
+| Diane  |
+| Harold |
+| Gwen   |
+| Harold |
+| Benny  |
+| Diane  |
+| Gwen   |
+| Gwen   |
+| Benny  |
++--------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT OWNER FROM PET;
++--------+
+| OWNER  |
++--------+
+| Diane  |
+| Harold |
+| Gwen   |
+| Benny  |
++--------+
+4 rows in set (0.20 sec)
+
+mysql> SELECT NAME,SPECIES,BIRTH FROM PET WHERE SPECIES='DOG' OR SPECIES='CAT';
++--------+---------+------------+
+| NAME   | SPECIES | BIRTH      |
++--------+---------+------------+
+| Fluffy | Cat     | 1993-02-04 |
+| Claws  | Cat     | 1994-03-17 |
+| Buffy  | Dog     | 1989-05-13 |
+| Fang   | Dog     | 1990-08-27 |
+| Bowser | Dog     | 1989-08-31 |
++--------+---------+------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT NAME,BIRTH FROM PET ORDER BY BIRTH;
++----------+------------+
+| NAME     | BIRTH      |
++----------+------------+
+| Buffy    | 1989-05-13 |
+| Bowser   | 1989-08-31 |
+| Fang     | 1990-08-27 |
+| Fluffy   | 1993-02-04 |
+| Claws    | 1994-03-17 |
+| Slim     | 1996-04-29 |
+| Whistler | 1997-12-09 |
+| Chirpy   | 1998-09-11 |
+| Puffball | 1999-03-30 |
++----------+------------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT NAME,BIRTH FROM PET ORDER BY BIRTH DESC;
++----------+------------+
+| NAME     | BIRTH      |
++----------+------------+
+| Puffball | 1999-03-30 |
+| Chirpy   | 1998-09-11 |
+| Whistler | 1997-12-09 |
+| Slim     | 1996-04-29 |
+| Claws    | 1994-03-17 |
+| Fluffy   | 1993-02-04 |
+| Fang     | 1990-08-27 |
+| Bowser   | 1989-08-31 |
+| Buffy    | 1989-05-13 |
++----------+------------+
+9 rows in set (0.09 sec)
+
+mysql> SELECT NAME,SPECIES,BIRTH FROM PET ORDER BY SPECIES,BIRTH DESC;
++----------+---------+------------+
+| NAME     | SPECIES | BIRTH      |
++----------+---------+------------+
+| Chirpy   | Bird    | 1998-09-11 |
+| Whistler | Bird    | 1997-12-09 |
+| Claws    | Cat     | 1994-03-17 |
+| Fluffy   | Cat     | 1993-02-04 |
+| Fang     | Dog     | 1990-08-27 |
+| Bowser   | Dog     | 1989-08-31 |
+| Buffy    | Dog     | 1989-05-13 |
+| Puffball | Hamster | 1999-03-30 |
+| Slim     | Snake   | 1996-04-29 |
++----------+---------+------------+
+9 rows in set (0.05 sec)
+
+mysql> SELECT NAME,BIRTH,CURDATE(),TIMESTAMPDIFF(YEAR,BIRTH,CURDATE()) AS AGE FROM PET;
++----------+------------+------------+------+
+| NAME     | BIRTH      | CURDATE()  | AGE  |
++----------+------------+------------+------+
+| Puffball | 1999-03-30 | 2024-01-31 |   24 |
+| Fluffy   | 1993-02-04 | 2024-01-31 |   30 |
+| Claws    | 1994-03-17 | 2024-01-31 |   29 |
+| Buffy    | 1989-05-13 | 2024-01-31 |   34 |
+| Fang     | 1990-08-27 | 2024-01-31 |   33 |
+| Bowser   | 1989-08-31 | 2024-01-31 |   34 |
+| Chirpy   | 1998-09-11 | 2024-01-31 |   25 |
+| Whistler | 1997-12-09 | 2024-01-31 |   26 |
+| Slim     | 1996-04-29 | 2024-01-31 |   27 |
++----------+------------+------------+------+
+9 rows in set (0.04 sec)
+
+mysql> SELECT NAME,BIRTH,CURDATE(),TIMESTAMPDIFF(YEAR,BIRTH,CURDATE()) AS AGE FRPM PET ORDER BY NAME;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FRPM PET ORDER BY NAME' at line 1
+mysql> SELECT NAME,BIRTH,CURDATE(),TIMESTAMPDIFF(YEAR,BIRTH,CURDATE()) AS AGE FROM PET ORDER BY NAME;
++----------+------------+------------+------+
+| NAME     | BIRTH      | CURDATE()  | AGE  |
++----------+------------+------------+------+
+| Bowser   | 1989-08-31 | 2024-01-31 |   34 |
+| Buffy    | 1989-05-13 | 2024-01-31 |   34 |
+| Chirpy   | 1998-09-11 | 2024-01-31 |   25 |
+| Claws    | 1994-03-17 | 2024-01-31 |   29 |
+| Fang     | 1990-08-27 | 2024-01-31 |   33 |
+| Fluffy   | 1993-02-04 | 2024-01-31 |   30 |
+| Puffball | 1999-03-30 | 2024-01-31 |   24 |
+| Slim     | 1996-04-29 | 2024-01-31 |   27 |
+| Whistler | 1997-12-09 | 2024-01-31 |   26 |
++----------+------------+------------+------+
+9 rows in set (0.00 sec)
+
+mysql> SLECT NAME,BIRTH,CURDATE(),TIMESTAMPDIFF(YEAR,BIRTH,CURDATE()) AS AGE FROM PET ORDER BY AGE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SLECT NAME,BIRTH,CURDATE(),TIMESTAMPDIFF(YEAR,BIRTH,CURDATE()) AS AGE FROM PET O' at line 1
+mysql> SELECT NAME,BIRTH,CURDATE(),TIMESTAMPDIFF(YEAR,BIRTH,CURDATE()) AS AGE FROM PET ORDER BY AGE;
++----------+------------+------------+------+
+| NAME     | BIRTH      | CURDATE()  | AGE  |
++----------+------------+------------+------+
+| Puffball | 1999-03-30 | 2024-01-31 |   24 |
+| Chirpy   | 1998-09-11 | 2024-01-31 |   25 |
+| Whistler | 1997-12-09 | 2024-01-31 |   26 |
+| Slim     | 1996-04-29 | 2024-01-31 |   27 |
+| Claws    | 1994-03-17 | 2024-01-31 |   29 |
+| Fluffy   | 1993-02-04 | 2024-01-31 |   30 |
+| Fang     | 1990-08-27 | 2024-01-31 |   33 |
+| Buffy    | 1989-05-13 | 2024-01-31 |   34 |
+| Bowser   | 1989-08-31 | 2024-01-31 |   34 |
++----------+------------+------------+------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT NAME,BIRTH,DEATH,TIMESTAMPDIFF(YEAR,BIRTH,DEATH) AS AGE FROM PET WHERE DEATH IS NOT NULL ORDER BY AGE;
++--------+------------+------------+------+
+| NAME   | BIRTH      | DEATH      | AGE  |
++--------+------------+------------+------+
+| Bowser | 1989-08-31 | 1995-07-29 |    5 |
++--------+------------+------------+------+
+1 row in set (0.00 sec)
+
+mysql> SELECT NAME,BIRTH,MONTH(BIRTH) FROM PET;
++----------+------------+--------------+
+| NAME     | BIRTH      | MONTH(BIRTH) |
++----------+------------+--------------+
+| Puffball | 1999-03-30 |            3 |
+| Fluffy   | 1993-02-04 |            2 |
+| Claws    | 1994-03-17 |            3 |
+| Buffy    | 1989-05-13 |            5 |
+| Fang     | 1990-08-27 |            8 |
+| Bowser   | 1989-08-31 |            8 |
+| Chirpy   | 1998-09-11 |            9 |
+| Whistler | 1997-12-09 |           12 |
+| Slim     | 1996-04-29 |            4 |
++----------+------------+--------------+
+9 rows in set (0.03 sec)
+
+mysql> SELECT NAME,BIRTH FROM PET WHERE MONTH(BIRTH)=5;
++-------+------------+
+| NAME  | BIRTH      |
++-------+------------+
+| Buffy | 1989-05-13 |
++-------+------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT NAME,BIRTH FROM PET WHERE MONTH(BIRTH)=MONTH(DATE_ADD(CURDATE(),INTERVAL 1 MONTH));
++--------+------------+
+| NAME   | BIRTH      |
++--------+------------+
+| Fluffy | 1993-02-04 |
++--------+------------+
+1 row in set (0.02 sec)
+
+mysql> SELECT NAME,BIRTH FROM PET WHERE MONTH(BIRTH)=MOD(MONTH(CURDATE(),12)+1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',12)+1' at line 1
+mysql> SELECT NAME,BIRTH FROM PET WHERE MONTH(BIRTH)=MOD(MONTH(CURDATE()),12)+1;
++--------+------------+
+| NAME   | BIRTH      |
++--------+------------+
+| Fluffy | 1993-02-04 |
++--------+------------+
+1 row in set (0.09 sec)
+
+mysql> SELECT '2018-10-31'+ INTERVAL 1 DAY;
++------------------------------+
+| '2018-10-31'+ INTERVAL 1 DAY |
++------------------------------+
+| 2018-11-01                   |
++------------------------------+
+1 row in set (0.04 sec)
+
+mysql> SELECT'2018-10-32' +INTERVAL 1 DAY;
++------------------------------+
+| '2018-10-32' +INTERVAL 1 DAY |
++------------------------------+
+| NULL                         |
++------------------------------+
+1 row in set, 1 warning (0.10 sec)
+
+mysql> SHOW WARNINGS;
++---------+------+----------------------------------------+
+| Level   | Code | Message                                |
++---------+------+----------------------------------------+
+| Warning | 1292 | Incorrect datetime value: '2018-10-32' |
++---------+------+----------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT 1 IS NULL, 1 IS NOT NULL;
++-----------+---------------+
+| 1 IS NULL | 1 IS NOT NULL |
++-----------+---------------+
+|         0 |             1 |
++-----------+---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT 1=NULL,1<>NULL,1<NULL,1>NULL;
++--------+---------+--------+--------+
+| 1=NULL | 1<>NULL | 1<NULL | 1>NULL |
++--------+---------+--------+--------+
+|   NULL |    NULL |   NULL |   NULL |
++--------+---------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT 0 IS NULL,0 IS NOT NULL,''IS NULL,''IS NOT NULL;
++-----------+---------------+-----------+---------------+
+| 0 IS NULL | 0 IS NOT NULL | ''IS NULL | ''IS NOT NULL |
++-----------+---------------+-----------+---------------+
+|         0 |             1 |         0 |             1 |
++-----------+---------------+-----------+---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM PET WHERE NAME LIKE 'B%';
++--------+--------+---------+------+------------+------------+
+| name   | owner  | species | sex  | birth      | death      |
++--------+--------+---------+------+------------+------------+
+| Buffy  | Harold | Dog     | F    | 1989-05-13 | NULL       |
+| Bowser | Diane  | Dog     | M    | 1989-08-31 | 1995-07-29 |
++--------+--------+---------+------+------------+------------+
+2 rows in set (0.03 sec)
+
+mysql> SELECT * FROM PET WHERE NAME LIKE '%FY';
++--------+--------+---------+------+------------+-------+
+| name   | owner  | species | sex  | birth      | death |
++--------+--------+---------+------+------------+-------+
+| Fluffy | Harold | Cat     | F    | 1993-02-04 | NULL  |
+| Buffy  | Harold | Dog     | F    | 1989-05-13 | NULL  |
++--------+--------+---------+------+------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PET WHERE NAME LIKE '%W%';
++----------+-------+---------+------+------------+------------+
+| name     | owner | species | sex  | birth      | death      |
++----------+-------+---------+------+------------+------------+
+| Claws    | Gwen  | Cat     | M    | 1994-03-17 | NULL       |
+| Bowser   | Diane | Dog     | M    | 1989-08-31 | 1995-07-29 |
+| Whistler | Gwen  | Bird    | NULL | 1997-12-09 | NULL       |
++----------+-------+---------+------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PET WHERE NAME LIKE '_____';
++-------+--------+---------+------+------------+-------+
+| name  | owner  | species | sex  | birth      | death |
++-------+--------+---------+------+------------+-------+
+| Claws | Gwen   | Cat     | M    | 1994-03-17 | NULL  |
+| Buffy | Harold | Dog     | F    | 1989-05-13 | NULL  |
++-------+--------+---------+------+------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PET WHERE REGEXP_LIKE(NAME,'^B');
++--------+--------+---------+------+------------+------------+
+| name   | owner  | species | sex  | birth      | death      |
++--------+--------+---------+------+------------+------------+
+| Buffy  | Harold | Dog     | F    | 1989-05-13 | NULL       |
+| Bowser | Diane  | Dog     | M    | 1989-08-31 | 1995-07-29 |
++--------+--------+---------+------+------------+------------+
+2 rows in set (0.15 sec)
+
+mysql> SELECT * FROM PET WHERE REGEXP(NAME,'^b', COLLATE utf8mb4_0900_as_cs);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'REGEXP(NAME,'^b', COLLATE utf8mb4_0900_as_cs)' at line 1
+mysql> select * from pet where regexp_like(name,'^b',collate ytf8mb4_0900_as_cs);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'collate ytf8mb4_0900_as_cs)' at line 1
+mysql> select * from pet where regexp_like(name,'^b' collate utf8mb4_09000_as_cs);
+ERROR 1273 (HY000): Unknown collation: 'utf8mb4_09000_as_cs'
+mysql> select * from pet where regexp_like(name,'^b' collate utf8mb4_0900_as_cs);
+ERROR 1253 (42000): COLLATION 'utf8mb4_0900_as_cs' is not valid for CHARACTER SET 'cp850'
+mysql> select * from pet where regexp_like(name, BINARY '^B');
+ERROR 3995 (HY000): Character set 'utf8mb4_0900_ai_ci' cannot be used in conjunction with 'binary' in call to regexp_like.
+mysql> SELECT * FROM PET WHERE REGEX_LIKE(NAME,'^B','C');
+ERROR 1305 (42000): FUNCTION menagerie.REGEX_LIKE does not exist
+mysql> SELECT * FROM PET WHERE REGEXP_LIKE(NAME,'^B','C');
+ERROR 1210 (HY000): Incorrect arguments to regexp_like
+mysql> SELECT * FROM PET WHERE REGEXP_LIKE(NAME,'^b','c');
+Empty set (0.00 sec)
+
+mysql> select * from pet where regexp_like(name,"fy$');
+    "> ";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> select * from pet where regexp_like(name,'fy$');
++--------+--------+---------+------+------------+-------+
+| name   | owner  | species | sex  | birth      | death |
++--------+--------+---------+------+------------+-------+
+| Fluffy | Harold | Cat     | F    | 1993-02-04 | NULL  |
+| Buffy  | Harold | Dog     | F    | 1989-05-13 | NULL  |
++--------+--------+---------+------+------------+-------+
+2 rows in set (0.20 sec)
+
+mysql> select * from pet where regexp_like(name."w");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"w")' at line 1
+mysql> seleecct * from pet where regexp_like(name,'w');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'seleecct * from pet where regexp_like(name,'w')' at line 1
+mysql> select * from pet where regexp_like(name,'w');
++----------+-------+---------+------+------------+------------+
+| name     | owner | species | sex  | birth      | death      |
++----------+-------+---------+------+------------+------------+
+| Claws    | Gwen  | Cat     | M    | 1994-03-17 | NULL       |
+| Bowser   | Diane | Dog     | M    | 1989-08-31 | 1995-07-29 |
+| Whistler | Gwen  | Bird    | NULL | 1997-12-09 | NULL       |
++----------+-------+---------+------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from pet where regexp_like(name,'^.....$');
++-------+--------+---------+------+------------+-------+
+| name  | owner  | species | sex  | birth      | death |
++-------+--------+---------+------+------------+-------+
+| Claws | Gwen   | Cat     | M    | 1994-03-17 | NULL  |
+| Buffy | Harold | Dog     | F    | 1989-05-13 | NULL  |
++-------+--------+---------+------+------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from pet where regexp_like(name,'^.{5}$');
++-------+--------+---------+------+------------+-------+
+| name  | owner  | species | sex  | birth      | death |
++-------+--------+---------+------+------------+-------+
+| Claws | Gwen   | Cat     | M    | 1994-03-17 | NULL  |
+| Buffy | Harold | Dog     | F    | 1989-05-13 | NULL  |
++-------+--------+---------+------+------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select count(*) from pet;
++----------+
+| count(*) |
++----------+
+|        9 |
++----------+
+1 row in set (0.21 sec)
+
+mysql> select owner,count(*) from pet group by owner;
++--------+----------+
+| owner  | count(*) |
++--------+----------+
+| Diane  |        2 |
+| Harold |        2 |
+| Gwen   |        3 |
+| Benny  |        2 |
++--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select species, count(*) from pet group by species;
++---------+----------+
+| species | count(*) |
++---------+----------+
+| Hamster |        1 |
+| Cat     |        2 |
+| Dog     |        3 |
+| Bird    |        2 |
+| Snake   |        1 |
++---------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select sex,count(*) from pet groupby sex;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sex' at line 1
+mysql> select sex,count(*) from pet group by sex;
++------+----------+
+| sex  | count(*) |
++------+----------+
+| F    |        4 |
+| M    |        4 |
+| NULL |        1 |
++------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select species, sex, count(*) from pet group by species, sex;
++---------+------+----------+
+| species | sex  | count(*) |
++---------+------+----------+
+| Hamster | F    |        1 |
+| Cat     | F    |        1 |
+| Cat     | M    |        1 |
+| Dog     | F    |        1 |
+| Dog     | M    |        2 |
+| Bird    | F    |        1 |
+| Bird    | NULL |        1 |
+| Snake   | M    |        1 |
++---------+------+----------+
+8 rows in set (0.00 sec)
+
+mysql> select species,sex,count(*) from pet where species='dog'orspecies='cat' group by species,sex;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'orspecies='cat' group by species,sex' at line 1
+mysql> select species,sex,count(*) from pet where species ='dog' or species = 'cat' group by species,sex;
++---------+------+----------+
+| species | sex  | count(*) |
++---------+------+----------+
+| Cat     | F    |        1 |
+| Cat     | M    |        1 |
+| Dog     | F    |        1 |
+| Dog     | M    |        2 |
++---------+------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select species,sex,count(*) from pet where sex is not null group by species,sex;
++---------+------+----------+
+| species | sex  | count(*) |
++---------+------+----------+
+| Hamster | F    |        1 |
+| Cat     | F    |        1 |
+| Cat     | M    |        1 |
+| Dog     | F    |        1 |
+| Dog     | M    |        2 |
+| Bird    | F    |        1 |
+| Snake   | M    |        1 |
++---------+------+----------+
+7 rows in set (0.00 sec)
+
+mysql> set sql_mode = 'only_full_group_by';
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select owner, count(*) from pet;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'menagerie.pet.owner'; this is incompatible with sql_mode=only_full_group_by
+mysql> set sql_mode='';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select owner,count(*) from pet;
++-------+----------+
+| owner | count(*) |
++-------+----------+
+| Diane |        9 |
++-------+----------+
+1 row in set (0.00 sec)
+
+mysql> create table event(name varchar(20),date DATE,type varchar(15), remarks varchar(255));
+Query OK, 0 rows affected (2.35 sec)
+
+mysql> LOAD DATA LOCAL INFILE 'event.txt' INTO TABLE event;
+ERROR 3948 (42000): Loading local data is disabled; this must be enabled on both the client and server sides
+mysql> INSERT INTO EVENT
+    -> VALUES('Fluppy','1995-05-15','Litter','4 Littens, 3 Female, 1 Male');
+Query OK, 1 row affected (0.20 sec)
+
+mysql> INSERT INTO EVENT
+    -> VALUES('Buffy','1993-06-23','Litter','5 Puppies, 2 Female, 3 Male');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> INSERT INTO EVENT
+    -> VALUES('Chirpy','1999-03-21','Vet','Needed beak straightened');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> INSERT INTO EVENT
+    -> VALUES('Slim',1997-08-03','Vet','Broken Lib');
+    '> ');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '','Vet','Broken Lib');
+')' at line 2
+mysql> INSERT INTO EVENT
+    -> VALUES('Slim','1997-08-03','Vet','Broken Lib');
+Query OK, 1 row affected (0.16 sec)
+
+mysql> INSERT INTO EVENT
+    -> VALUES('Bowser','1991-10-12','Kennel',NULL);
+Query OK, 1 row affected (0.21 sec)
+
+mysql> INSERT INTO EVENT
+    -> VALUES('Fang','1998-08-28','Birthday','Gave him a new chew toy');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> insert into event
+    -> values('Fang','1991-10-12','Kennel',NULL);
+Query OK, 1 row affected (0.18 sec)
+
+mysql> INSERT INTO EVENT
+    -> VALUES('Claws','1998-09-17','Bithday','Gave him a new flea collar');
+Query OK, 1 row affected (0.18 sec)
+
+mysql> INSERT INTO EVENT
+    -> VALUES('Whistler','1998-12-09','Birthday','First Birthday');
+Query OK, 1 row affected (0.11 sec)
+
+mysql> INSERT INTO EVENT
+    -> VALUES('Buffy','1993-06-23','Litter','3 Pupppies, 3 Female);
+    '> '
+    -> ';
+    '> '3 Pupppies, 3 Female');
+    '> \c
+    '> '
+    -> ');
+    '> \c
+    '> ';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '3 Pupppies, 3 Female');
+\c
+'
+');
+\c
+'' at line 5
+mysql> Insert into event
+    -> values('Buffy','1994-06-19','Litter','3 Puppies, 3 Female');
+Query OK, 1 row affected (0.16 sec)
+
+mysql> select* from event;
++----------+------------+----------+-----------------------------+
+| name     | date       | type     | remarks                     |
++----------+------------+----------+-----------------------------+
+| Fluppy   | 1995-05-15 | Litter   | 4 Littens, 3 Female, 1 Male |
+| Buffy    | 1993-06-23 | Litter   | 5 Puppies, 2 Female, 3 Male |
+| Chirpy   | 1999-03-21 | Vet      | Needed beak straightened    |
+| Slim     | 1997-08-03 | Vet      | Broken Lib                  |
+| Bowser   | 1991-10-12 | Kennel   | NULL                        |
+| Fang     | 1998-08-28 | Birthday | Gave him a new chew toy     |
+| Fang     | 1991-10-12 | Kennel   | NULL                        |
+| Claws    | 1998-09-17 | Bithday  | Gave him a new flea collar  |
+| Whistler | 1998-12-09 | Birthday | First Birthday              |
+| Buffy    | 1994-06-19 | Litter   | 3 Puppies, 3 Female         |
++----------+------------+----------+-----------------------------+
+10 rows in set (0.00 sec)
+
+mysql> update event set type ='birthday' where name='Claws';
+Query OK, 1 row affected (0.20 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from event;
++----------+------------+----------+-----------------------------+
+| name     | date       | type     | remarks                     |
++----------+------------+----------+-----------------------------+
+| Fluppy   | 1995-05-15 | Litter   | 4 Littens, 3 Female, 1 Male |
+| Buffy    | 1993-06-23 | Litter   | 5 Puppies, 2 Female, 3 Male |
+| Chirpy   | 1999-03-21 | Vet      | Needed beak straightened    |
+| Slim     | 1997-08-03 | Vet      | Broken Lib                  |
+| Bowser   | 1991-10-12 | Kennel   | NULL                        |
+| Fang     | 1998-08-28 | Birthday | Gave him a new chew toy     |
+| Fang     | 1991-10-12 | Kennel   | NULL                        |
+| Claws    | 1998-09-17 | birthday | Gave him a new flea collar  |
+| Whistler | 1998-12-09 | Birthday | First Birthday              |
+| Buffy    | 1994-06-19 | Litter   | 3 Puppies, 3 Female         |
++----------+------------+----------+-----------------------------+
+10 rows in set (0.00 sec)
+
+mysql> update event set type='Birthday' where name='Claws';
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select* from event;
++----------+------------+----------+-----------------------------+
+| name     | date       | type     | remarks                     |
++----------+------------+----------+-----------------------------+
+| Fluppy   | 1995-05-15 | Litter   | 4 Littens, 3 Female, 1 Male |
+| Buffy    | 1993-06-23 | Litter   | 5 Puppies, 2 Female, 3 Male |
+| Chirpy   | 1999-03-21 | Vet      | Needed beak straightened    |
+| Slim     | 1997-08-03 | Vet      | Broken Lib                  |
+| Bowser   | 1991-10-12 | Kennel   | NULL                        |
+| Fang     | 1998-08-28 | Birthday | Gave him a new chew toy     |
+| Fang     | 1991-10-12 | Kennel   | NULL                        |
+| Claws    | 1998-09-17 | Birthday | Gave him a new flea collar  |
+| Whistler | 1998-12-09 | Birthday | First Birthday              |
+| Buffy    | 1994-06-19 | Litter   | 3 Puppies, 3 Female         |
++----------+------------+----------+-----------------------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT PET.NAME,TIMESTAMPDIFF(YEAR,BIRTH,DATE)AS AGE,REMARKS FROM PET;
+ERROR 1054 (42S22): Unknown column 'DATE' in 'field list'
+mysql> SELECT PET.NAME,TIMESTAMPDIFF(YEAR,BIRTH,EVENT.DATE),REMARKS FROM PET,EVENT;
++----------+--------------------------------------+-----------------------------+
+| NAME     | TIMESTAMPDIFF(YEAR,BIRTH,EVENT.DATE) | REMARKS                     |
++----------+--------------------------------------+-----------------------------+
+| Slim     |                                    0 | 4 Littens, 3 Female, 1 Male |
+| Whistler |                                   -2 | 4 Littens, 3 Female, 1 Male |
+| Chirpy   |                                   -3 | 4 Littens, 3 Female, 1 Male |
+| Bowser   |                                    5 | 4 Littens, 3 Female, 1 Male |
+| Fang     |                                    4 | 4 Littens, 3 Female, 1 Male |
+| Buffy    |                                    6 | 4 Littens, 3 Female, 1 Male |
+| Claws    |                                    1 | 4 Littens, 3 Female, 1 Male |
+| Fluffy   |                                    2 | 4 Littens, 3 Female, 1 Male |
+| Puffball |                                   -3 | 4 Littens, 3 Female, 1 Male |
+| Slim     |                                   -2 | 5 Puppies, 2 Female, 3 Male |
+| Whistler |                                   -4 | 5 Puppies, 2 Female, 3 Male |
+| Chirpy   |                                   -5 | 5 Puppies, 2 Female, 3 Male |
+| Bowser   |                                    3 | 5 Puppies, 2 Female, 3 Male |
+| Fang     |                                    2 | 5 Puppies, 2 Female, 3 Male |
+| Buffy    |                                    4 | 5 Puppies, 2 Female, 3 Male |
+| Claws    |                                    0 | 5 Puppies, 2 Female, 3 Male |
+| Fluffy   |                                    0 | 5 Puppies, 2 Female, 3 Male |
+| Puffball |                                   -5 | 5 Puppies, 2 Female, 3 Male |
+| Slim     |                                    2 | Needed beak straightened    |
+| Whistler |                                    1 | Needed beak straightened    |
+| Chirpy   |                                    0 | Needed beak straightened    |
+| Bowser   |                                    9 | Needed beak straightened    |
+| Fang     |                                    8 | Needed beak straightened    |
+| Buffy    |                                    9 | Needed beak straightened    |
+| Claws    |                                    5 | Needed beak straightened    |
+| Fluffy   |                                    6 | Needed beak straightened    |
+| Puffball |                                    0 | Needed beak straightened    |
+| Slim     |                                    1 | Broken Lib                  |
+| Whistler |                                    0 | Broken Lib                  |
+| Chirpy   |                                   -1 | Broken Lib                  |
+| Bowser   |                                    7 | Broken Lib                  |
+| Fang     |                                    6 | Broken Lib                  |
+| Buffy    |                                    8 | Broken Lib                  |
+| Claws    |                                    3 | Broken Lib                  |
+| Fluffy   |                                    4 | Broken Lib                  |
+| Puffball |                                   -1 | Broken Lib                  |
+| Slim     |                                   -4 | NULL                        |
+| Whistler |                                   -6 | NULL                        |
+| Chirpy   |                                   -6 | NULL                        |
+| Bowser   |                                    2 | NULL                        |
+| Fang     |                                    1 | NULL                        |
+| Buffy    |                                    2 | NULL                        |
+| Claws    |                                   -2 | NULL                        |
+| Fluffy   |                                   -1 | NULL                        |
+| Puffball |                                   -7 | NULL                        |
+| Slim     |                                    2 | Gave him a new chew toy     |
+| Whistler |                                    0 | Gave him a new chew toy     |
+| Chirpy   |                                    0 | Gave him a new chew toy     |
+| Bowser   |                                    8 | Gave him a new chew toy     |
+| Fang     |                                    8 | Gave him a new chew toy     |
+| Buffy    |                                    9 | Gave him a new chew toy     |
+| Claws    |                                    4 | Gave him a new chew toy     |
+| Fluffy   |                                    5 | Gave him a new chew toy     |
+| Puffball |                                    0 | Gave him a new chew toy     |
+| Slim     |                                   -4 | NULL                        |
+| Whistler |                                   -6 | NULL                        |
+| Chirpy   |                                   -6 | NULL                        |
+| Bowser   |                                    2 | NULL                        |
+| Fang     |                                    1 | NULL                        |
+| Buffy    |                                    2 | NULL                        |
+| Claws    |                                   -2 | NULL                        |
+| Fluffy   |                                   -1 | NULL                        |
+| Puffball |                                   -7 | NULL                        |
+| Slim     |                                    2 | Gave him a new flea collar  |
+| Whistler |                                    0 | Gave him a new flea collar  |
+| Chirpy   |                                    0 | Gave him a new flea collar  |
+| Bowser   |                                    9 | Gave him a new flea collar  |
+| Fang     |                                    8 | Gave him a new flea collar  |
+| Buffy    |                                    9 | Gave him a new flea collar  |
+| Claws    |                                    4 | Gave him a new flea collar  |
+| Fluffy   |                                    5 | Gave him a new flea collar  |
+| Puffball |                                    0 | Gave him a new flea collar  |
+| Slim     |                                    2 | First Birthday              |
+| Whistler |                                    1 | First Birthday              |
+| Chirpy   |                                    0 | First Birthday              |
+| Bowser   |                                    9 | First Birthday              |
+| Fang     |                                    8 | First Birthday              |
+| Buffy    |                                    9 | First Birthday              |
+| Claws    |                                    4 | First Birthday              |
+| Fluffy   |                                    5 | First Birthday              |
+| Puffball |                                    0 | First Birthday              |
+| Slim     |                                   -1 | 3 Puppies, 3 Female         |
+| Whistler |                                   -3 | 3 Puppies, 3 Female         |
+| Chirpy   |                                   -4 | 3 Puppies, 3 Female         |
+| Bowser   |                                    4 | 3 Puppies, 3 Female         |
+| Fang     |                                    3 | 3 Puppies, 3 Female         |
+| Buffy    |                                    5 | 3 Puppies, 3 Female         |
+| Claws    |                                    0 | 3 Puppies, 3 Female         |
+| Fluffy   |                                    1 | 3 Puppies, 3 Female         |
+| Puffball |                                   -4 | 3 Puppies, 3 Female         |
++----------+--------------------------------------+-----------------------------+
+90 rows in set (0.00 sec)
+
+mysql> select pet.name,timestampdiff(year,birth,date) as age,remarks from pet inner join event on pet.name=event.name where even.type='litter';
+ERROR 1054 (42S22): Unknown column 'even.type' in 'where clause'
+mysql> select pet.name.timestampdiff(year,birth,date) as age, remarks from pet inner join event on pet.name=event.name where event.type='litter';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(year,birth,date) as age, remarks from pet inner join event on pet.name=event.na' at line 1
+mysql> SELECT pet.name,TIMESTAMPDIFF(YEAR,birth,date),remarks from pet INNER JOIN EVENT ON pet.name = event.name where event.type = 'litter';
++-------+--------------------------------+-----------------------------+
+| name  | TIMESTAMPDIFF(YEAR,birth,date) | remarks                     |
++-------+--------------------------------+-----------------------------+
+| Buffy |                              5 | 3 Puppies, 3 Female         |
+| Buffy |                              4 | 5 Puppies, 2 Female, 3 Male |
++-------+--------------------------------+-----------------------------+
+2 rows in set (0.00 sec)
+
+mysql> select pet.name,TIMESTAMPDIFF(YEAR,BIRTH,DATE) AS AGE,REMARKS FROM PET INNER JOIN EVENT ON PET.NAME=EVENT.NAME WHERE EVENT.TYPE='LITTER';
++-------+------+-----------------------------+
+| name  | AGE  | REMARKS                     |
++-------+------+-----------------------------+
+| Buffy |    5 | 3 Puppies, 3 Female         |
+| Buffy |    4 | 5 Puppies, 2 Female, 3 Male |
++-------+------+-----------------------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT P1.NAME,P1.SEX,P2.NAME,P2.SEX,P1.SPECIES FROM PET AS P1 INNER JOIN PET AS PET2
+    -> ON P1.SPECIES=P2.SPECIES
+    -> AND P1.SEX='F' AND P1.DEATH IS NULL
+    -> AND P2.SEX='M' AND P2.DEATH IS NULL;
+ERROR 1054 (42S22): Unknown column 'P2.NAME' in 'field list'
+mysql> SELECT P1.NAME,P1.SEX,P2.NAME,P2.SEX,P1.SPECIES FROM PET AS P1 INNER JOIN PET AS P2
+    -> ON P1.SPECIES=P2.SPECIES
+    -> AND P1.SEX='F' AND P1.DEATH IS NULL
+    -> AND P2.SEX='M' AND P2.DEATH IS NULL;
++--------+------+-------+------+---------+
+| NAME   | SEX  | NAME  | SEX  | SPECIES |
++--------+------+-------+------+---------+
+| Fluffy | F    | Claws | M    | Cat     |
+| Buffy  | F    | Fang  | M    | Dog     |
++--------+------+-------+------+---------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT DATABASE();
++------------+
+| DATABASE() |
++------------+
+| menagerie  |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SHOW TABLES;
++---------------------+
+| Tables_in_menagerie |
++---------------------+
+| event               |
+| pet                 |
++---------------------+
+2 rows in set (0.16 sec)
+
+mysql> DESCRIBE PET;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(20) | YES  |     | NULL    |       |
+| owner   | varchar(20) | YES  |     | NULL    |       |
+| species | varchar(20) | YES  |     | NULL    |       |
+| sex     | char(1)     | YES  |     | NULL    |       |
+| birth   | date        | YES  |     | NULL    |       |
+| death   | date        | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+6 rows in set (0.11 sec)
+
+mysql> DESCRIBE EVENT;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| name    | varchar(20)  | YES  |     | NULL    |       |
+| date    | date         | YES  |     | NULL    |       |
+| type    | varchar(15)  | YES  |     | NULL    |       |
+| remarks | varchar(255) | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SHOW CREATE TABLE PET;
++-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table | Create Table                                                                                                                                                                                                                                                                                |
++-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| PET   | CREATE TABLE `pet` (
+  `name` varchar(20) DEFAULT NULL,
+  `owner` varchar(20) DEFAULT NULL,
+  `species` varchar(20) DEFAULT NULL,
+  `sex` char(1) DEFAULT NULL,
+  `birth` date DEFAULT NULL,
+  `death` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.02 sec)
+
+mysql> SHOW INDEX FROM PET;
+Empty set (0.05 sec)
+
+mysql> mysql<batch-file;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql<batch-file' at line 1
+mysql> C:\>mysql -e "source batch-file";
+ERROR:
+Unknown command '\>'.
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'C:\>mysql -e "source batch-file"' at line 1
+mysql> select distinct species from pet;
++---------+
+| species |
++---------+
+| Hamster |
+| Cat     |
+| Dog     |
+| Bird    |
+| Snake   |
++---------+
+5 rows in set (0.00 sec)
+
+mysql> create table shop(article INT UNSIGNED DEFAULT '0000' NOT NULL,
+    -> dealer CHAR(20) DEFAULT '' NOT NULL,
+    -> price DECIMAL(16,2) DEFAULT '0.00' NOT NULL,
+    -> PRIMARY KEY(article,dealer));
+Query OK, 0 rows affected (1.28 sec)
+
+mysql> INSERT INTO shop VALUES
+    -> (1,'A',3.45),(1,'B',3.99),(2,'A',10.99),(3,'B',1.45),(3,'C',1.69),(3,'D',1.25),(4,'D',19.95);
+Query OK, 7 rows affected (0.21 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM SHOP ORDER BY ARTICLE;
++---------+--------+-------+
+| article | dealer | price |
++---------+--------+-------+
+|       1 | A      |  3.45 |
+|       1 | B      |  3.99 |
+|       2 | A      | 10.99 |
+|       3 | B      |  1.45 |
+|       3 | C      |  1.69 |
+|       3 | D      |  1.25 |
+|       4 | D      | 19.95 |
++---------+--------+-------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT MAX(ARTICLE) AS ARTICLE FROM SHOP;
++---------+
+| ARTICLE |
++---------+
+|       4 |
++---------+
+1 row in set (0.04 sec)
+
+mysql> SELECT ARTICLE,DEALER,PRICE FROM SHOP
+    -> WHERE PRICE=(SELECT MAX(PRICE) FROM SHOP);
++---------+--------+-------+
+| ARTICLE | DEALER | PRICE |
++---------+--------+-------+
+|       4 | D      | 19.95 |
++---------+--------+-------+
+1 row in set (0.05 sec)
+
+mysql> SELECT S1.ARTICLE,S1.DEALER,S1.PRICE FROM SHOP S1
+    -> LEFT JOIN
+    -> SHOP S2
+    -> ON
+    -> S1.PRICE<S2.PRICE
+    -> WHERE S2.ARTICLE IS NULL;
++---------+--------+-------+
+| ARTICLE | DEALER | PRICE |
++---------+--------+-------+
+|       4 | D      | 19.95 |
++---------+--------+-------+
+1 row in set (0.00 sec)
+
+mysql> SELECT ARTICLE,DEALER,PRICE
+    -> FROM SHOP
+    -> ORDER BY PRICE DESC
+    -> LIMIT 1;
++---------+--------+-------+
+| ARTICLE | DEALER | PRICE |
++---------+--------+-------+
+|       4 | D      | 19.95 |
++---------+--------+-------+
+1 row in set (0.00 sec)
+
+mysql> SELECT ARTICLE,MAX(PRICE) AS PRICE
+    -> FROM SHOP
+    -> GROUP BY ARTICLE
+    -> ORDER BY PRICE;
++---------+-------+
+| ARTICLE | PRICE |
++---------+-------+
+|       3 |  1.69 |
+|       1 |  3.99 |
+|       2 | 10.99 |
+|       4 | 19.95 |
++---------+-------+
+4 rows in set (0.06 sec)
+
+mysql> SELECT ARTICLE,MAX(PRICE) AS PRICE
+    -> FROM SHOP
+    -> GROUP BY ARTICLE
+    -> ORDER BY ARTICLE;
++---------+-------+
+| ARTICLE | PRICE |
++---------+-------+
+|       1 |  3.99 |
+|       2 | 10.99 |
+|       3 |  1.69 |
+|       4 | 19.95 |
++---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT ARTICLE,DEALER,PRICE
+    -> FROM SHOP S1
+    -> WHERE PRICE=(SELECT MAX(S2.PRICE)
+    -> FROM SHOP S2
+    -> WHERE S1.ARTICLE=S2.ARTICLE)
+    -> ORDERBY ARTICLE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDERBY ARTICLE' at line 6
+mysql> SELECT article, dealer, price
+    -> FROM   shop s1
+    -> WHERE  price=(SELECT MAX(s2.price)
+    ->               FROM shop s2
+    ->               WHERE s1.article = s2.article)
+    -> ORDER BY article;
++---------+--------+-------+
+| article | dealer | price |
++---------+--------+-------+
+|       1 | B      |  3.99 |
+|       2 | A      | 10.99 |
+|       3 | C      |  1.69 |
+|       4 | D      | 19.95 |
++---------+--------+-------+
+4 rows in set (0.00 sec)
+
+mysql> +---------+--------+-------+
+    -> | article | dealer | price |
+    -> +---------+--------+-------+
+    -> |    0001 | B      |  3.99 |
+    -> |    0002 | A      | 10.99 |
+    -> |    0003 | C      |  1.69 |
+    -> |    0004 | D      | 19.95 |
+    ->
+    -> \C
+ERROR:
+Usage: \C charset_name | charset charset_name
+    -> \c
+mysql> select article,dealer,price
+    -> from shop s1
+    -> where price=(select max(s2.price)
+    -> from shop s2
+    -> where s1.article=s2.article)
+    -> order by article;
++---------+--------+-------+
+| article | dealer | price |
++---------+--------+-------+
+|       1 | B      |  3.99 |
+|       2 | A      | 10.99 |
+|       3 | C      |  1.69 |
+|       4 | D      | 19.95 |
++---------+--------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select s1.article,dealer,s1.price from shop s1
+    -> join(select article,max(price)as price from shop
+    -> group by article) as s2
+    -> on s1.article = s2.article and s1.price=s2.price
+    -> order by article;
++---------+--------+-------+
+| article | dealer | price |
++---------+--------+-------+
+|       1 | B      |  3.99 |
+|       2 | A      | 10.99 |
+|       3 | C      |  1.69 |
+|       4 | D      | 19.95 |
++---------+--------+-------+
+4 rows in set (0.66 sec)
+
+mysql> select s1.article,s1.dealer,s1.price
+    -> from shop s1
+    -> left join shop s2 on s1.article = s2.article and s1.price<s2.price
+    -> where s2.article is null
+    -> order by s1.article;
++---------+--------+-------+
+| article | dealer | price |
++---------+--------+-------+
+|       1 | B      |  3.99 |
+|       2 | A      | 10.99 |
+|       3 | C      |  1.69 |
+|       4 | D      | 19.95 |
++---------+--------+-------+
+4 rows in set (0.00 sec)
+
+mysql> with s1 as(
+    -> select article,dealer,price,rank() over (partition by article order by price desc) as rank
+    -> from shop)
+    -> select article,dealer,price
+    -> from s1
+    -> where 'rank'=1
+    -> order by article;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'rank
+from shop)
+select article,dealer,price
+from s1
+where 'rank'=1
+order by arti' at line 2
+mysql> WITH s1 AS (
+    ->    SELECT article, dealer, price,
+    ->           RANK() OVER (PARTITION BY article
+    ->                            ORDER BY price DESC
+    ->                       ) AS `Rank`
+    ->      FROM shop
+    -> )
+    -> SELECT article, dealer, price
+    ->   FROM s1
+    ->   WHERE `Rank` = 1
+    -> ORDER BY article
+    -> ;
++---------+--------+-------+
+| article | dealer | price |
++---------+--------+-------+
+|       1 | B      |  3.99 |
+|       2 | A      | 10.99 |
+|       3 | C      |  1.69 |
+|       4 | D      | 19.95 |
++---------+--------+-------+
+4 rows in set (0.04 sec)
+
+mysql> select @min_price:=min(price),@max_price:=max(price) from shop;
++------------------------+------------------------+
+| @min_price:=min(price) | @max_price:=max(price) |
++------------------------+------------------------+
+|                   1.25 |                  19.95 |
++------------------------+------------------------+
+1 row in set, 2 warnings (0.05 sec)
+
+mysql> select *from shop where price =@min_price;
++---------+--------+-------+
+| article | dealer | price |
++---------+--------+-------+
+|       3 | D      |  1.25 |
++---------+--------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from shop where price = @mac_price;
+Empty set (0.00 sec)
+
+mysql> select * from shop where price=@max_price;
++---------+--------+-------+
+| article | dealer | price |
++---------+--------+-------+
+|       4 | D      | 19.95 |
++---------+--------+-------+
+1 row in set (0.00 sec)
+
+mysql> create table parent(id int not null,primary key(id))
+    -> engine=innidb
+    -> create table child(id int,parent_id int,index par_ind(parent_id),foreign key(parent_id) reference parent(id))
+    -> engine=innidb;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'create table child(id int,parent_id int,index par_ind(parent_id),foreign key(par' at line 3
+mysql> CREATE TABLE parent (
+    ->     id INT NOT NULL,
+    ->     PRIMARY KEY (id)
+    -> ) ENGINE=INNODB;
+Query OK, 0 rows affected (1.27 sec)
+
+mysql> CREATE TABLE child (
+    ->     id INT,
+    ->     parent_id INT,
+    ->     INDEX par_ind (parent_id),
+    ->     FOREIGN KEY (parent_id)
+    ->         REFERENCES parent(id)
+    -> ) ENGINE=INNODB;
+Query OK, 0 rows affected (1.71 sec)
+
+mysql> insert into parent(id) values row(1);
+Query OK, 1 row affected (1.54 sec)
+
+mysql> table parent;
++----+
+| id |
++----+
+|  1 |
++----+
+1 row in set (0.00 sec)
+
+mysql> insert into child(id,parent_id) values row(1,1);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into child(id,parent_id) values row(2,2);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`menagerie`.`child`, CONSTRAINT `child_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `parent` (`id`))
+mysql> delete from parent where id=1;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`menagerie`.`child`, CONSTRAINT `child_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `parent` (`id`))
+mysql> drop table child;
+Query OK, 0 rows affected (0.94 sec)
+
+mysql> create table child(
+    -> id int,
+    -> parent_id int,
+    -> index par_ind(parent_id),
+    -> foreign key(parent_id)
+    -> references parent(id)
+    -> on update cascade
+    -> on delete cascade)
+    -> engine=innodb;
+Query OK, 0 rows affected (1.01 sec)
+
+mysql> insert into child(id,parent_id) values row(1,1),row(2,1),row(3,1);
+Query OK, 3 rows affected (0.14 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> table child;
++------+-----------+
+| id   | parent_id |
++------+-----------+
+|    1 |         1 |
+|    2 |         1 |
+|    3 |         1 |
++------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> update parent set id=2 where id=1;
+Query OK, 1 row affected (0.52 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> table parent;
++----+
+| id |
++----+
+|  2 |
++----+
+1 row in set (0.00 sec)
+
+mysql> table child;
++------+-----------+
+| id   | parent_id |
++------+-----------+
+|    1 |         2 |
+|    2 |         2 |
+|    3 |         2 |
++------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> delete from parent where id=2;
+Query OK, 1 row affected (0.23 sec)
+
+mysql> table child;
+Empty set (0.00 sec)
+
+mysql> select field1_index,field2_index from test_table
+    -> where field1_index='1' or field2_indext='1';
+ERROR 1146 (42S02): Table 'menagerie.test_table' doesn't exist
+mysql> create table t1 (year YEAR, month INT UNSIGNED,day INT UNSIGNED);
+Query OK, 0 rows affected (1.12 sec)
+
+mysql> INSERT INTO T1 VALUES(2000,1,1),(2000,1,20),(2000,1,30),(2000,2,23),(2000,2,23),(2000,2,2);
+Query OK, 6 rows affected (0.18 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> SELECT YEAR,MONTH,BIT_COUNT
+    -> (BIT_OR(1<<day))
+    -> group by year,month;
+ERROR 1054 (42S22): Unknown column 'YEAR' in 'field list'
+mysql> select year,month,BIT_COUNT(BIT_OR(1<<day))group by year,month;
+ERROR 1054 (42S22): Unknown column 'year' in 'field list'
+mysql> table t1;
++------+-------+------+
+| year | month | day  |
++------+-------+------+
+| 2000 |     1 |    1 |
+| 2000 |     1 |   20 |
+| 2000 |     1 |   30 |
+| 2000 |     2 |   23 |
+| 2000 |     2 |   23 |
+| 2000 |     2 |    2 |
++------+-------+------+
+6 rows in set (0.00 sec)
+
+mysql> create table animals(id mediumint not null auto_increment,name char(30) not null,primary key (id));
+Query OK, 0 rows affected (1.23 sec)
+
+mysql> insert into animals (name) values
+    -> ('dog'),('cat'),('penguin'),('lax'),('whale'),('ostrich');
+Query OK, 6 rows affected (0.22 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from animals;
++----+---------+
+| id | name    |
++----+---------+
+|  1 | dog     |
+|  2 | cat     |
+|  3 | penguin |
+|  4 | lax     |
+|  5 | whale   |
+|  6 | ostrich |
++----+---------+
+6 rows in set (0.00 sec)
+
+mysql> insert into animals(id,name)values(0,'groundhod');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into animals(id,name) values(NULL,'squirrel');
+Query OK, 1 row affected (0.21 sec)
+
+mysql> insert into animals(id,name)values(100,'rabbit');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into animals(id,name) values(null,'mouse');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> select * from animals;
++-----+-----------+
+| id  | name      |
++-----+-----------+
+|   1 | dog       |
+|   2 | cat       |
+|   3 | penguin   |
+|   4 | lax       |
+|   5 | whale     |
+|   6 | ostrich   |
+|   7 | groundhod |
+|   8 | squirrel  |
+| 100 | rabbit    |
+| 101 | mouse     |
++-----+-----------+
+10 rows in set (0.00 sec)
+
+mysql> last_increment_id(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'last_increment_id(id)' at line 1
+mysql> last_increment_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'last_increment_id' at line 1
+mysql> last_insert_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'last_insert_id' at line 1
+mysql> last_insert_id(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'last_insert_id(id)' at line 1
+mysql> alter table tb1 auto_incremnet=100;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto_incremnet=100' at line 1
+mysql> CREATE TABLE animals (
+    ->     grp ENUM('fish','mammal','bird') NOT NULL,
+    ->     id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    ->     name CHAR(30) NOT NULL,
+    ->     PRIMARY KEY (grp,id)
+    -> ) ENGINE=MyISAM;
+ERROR 1050 (42S01): Table 'animals' already exists
+mysql> INSERT INTO animals (grp,name) VALUES
+    ->     ('mammal','dog'),('mammal','cat'),
+    ->     ('bird','penguin'),('fish','lax'),('mammal','whale'),
+    ->     ('bird','ostrich');
